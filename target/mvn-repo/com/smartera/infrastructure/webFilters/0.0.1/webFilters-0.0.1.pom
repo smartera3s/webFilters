@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.smartera.infrastructure</groupId>
+  <artifactId>webFilters</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
+
+  <name>webFilters</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<github.global.server>github</github.global.server>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <repositories>
+  	<repository>
+	        <id>jobsHandler-mvn-repo</id>
+	        <url>https://raw.github.com/smartera3s/webFilters/mvn-repo/</url>
+	        <snapshots>
+	            <enabled>true</enabled>
+	            <updatePolicy>always</updatePolicy>
+	        </snapshots>
+	    </repository>
+  </repositories>
+
+	<distributionManagement>
+	    <repository>
+	        <id>internal.repo</id>
+	        <name>Temporary Staging Repository</name>
+	        <url>file://${project.build.directory}/mvn-repo</url>
+	    </repository>
+	</distributionManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+    
+  </dependencies>
+  
+  <build>
+	<sourceDirectory>src</sourceDirectory>
+	
+		<plugins>
+		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+		        <groupId>com.github.github</groupId>
+		        <artifactId>site-maven-plugin</artifactId>
+		        <version>0.11</version>
+		        <configuration>
+		            <!-- git commit message -->
+		            <message>Maven artifacts for ${project.version}</message>
+		            <!-- disable webpage processing -->
+		            <noJekyll>true</noJekyll>
+		            <!-- matches distribution management repository url above -->
+		            <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+		            <!-- remote branch name -->
+		            <branch>refs/heads/mvn-repo</branch>
+		            <!-- If you remove this then the old artifact will be removed and new 
+		             one will replace. But with the merge tag you can just release by changing 
+		                                                the version -->
+       		            <merge>true</merge>
+		                                                
+		            <includes>
+	                	<include>**/*</include>
+	                </includes>
+	                <!-- github repo name -->
+	                <repositoryName>webFilters</repositoryName>
+	                <!-- github username -->
+	                <repositoryOwner>smartera3s</repositoryOwner>
+		        </configuration>
+		        <executions>
+					<execution>
+					    <goals>
+					         <goal>site</goal>
+					    </goals>
+					    <phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+  
+</project>
